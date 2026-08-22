@@ -1,19 +1,22 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header("Location: signin.php");
+    header("Location: login.php");
     exit();
 }
 include 'db_connect.php';
 $active = "disputes";
 
-// NOTE: Abhi dummy data hai. Baad mein yahan real query aayegi, jaise:
-// $result = $conn->query("SELECT * FROM complaints WHERE status='open'");
-$disputes = [
-    ["tenant" => "Faraz Ahmed", "landlord" => "Bilal Rentals", "issue" => "Late payment dispute", "risk" => "high"],
-    ["tenant" => "Zainab Tariq", "landlord" => "Sara Khan", "issue" => "Repair delay complaint", "risk" => "pending"],
-    ["tenant" => "Usman Ali", "landlord" => "Hamza Iqbal", "issue" => "Penalty clause disagreement", "risk" => "verified"],
-];
+// FR-7.2: Admin shall be able to monitor open disputes and escalations
+// Complaints table: complaint_id, agreement_id, raised_by, voice_file, transcribed_text, ai_suggestion, status
+// (Kashaf ke rule-based suggestion se "ai_suggestion" column bharega)
+
+$disputes = $conn->query("
+    SELECT c.complaint_id, c.transcribed_text, c.status, r.risk_level
+    FROM Complaints c
+    LEFT JOIN RiskScores r ON c.agreement_id = r.agreement_id
+    WHERE c.status = 'open'
+");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,16 +36,20 @@ $disputes = [
   </div>
 
   <table>
-    <thead><tr><th>Tenant</th><th>Landlord</th><th>Issue</th><th>Risk Level</th><th>Action</th></tr></thead>
+    <thead><tr><th>Complaint</th><th>Status</th><th>Risk Level</th><th>Action</th></tr></thead>
     <tbody>
-      <?php foreach ($disputes as $d) { ?>
+      <?php if ($disputes && $disputes->num_rows > 0) { while ($d = $disputes->fetch_assoc()) {
+          $risk = $d['risk_level'] ?? 'low';
+          $risk_class = strtolower($risk);
+      ?>
       <tr>
-        <td><?php echo $d['tenant']; ?></td>
-        <td><?php echo $d['landlord']; ?></td>
-        <td><?php echo $d['issue']; ?></td>
-        <td><span class="badge <?php echo $d['risk']; ?>"><?php echo ucfirst($d['risk']); ?></span></td>
-        <td><button class="btn-sm approve">Review</button></td>
+        <td><?php echo $d['transcribed_text'] ?? 'Complaint #' . $d['complaint_id']; ?></td>
+        <td><span class="badge pending"><?php echo $d['status']; ?></span></td>
+        <td><span class="badge <?php echo $risk_class; ?>"><?php echo ucfirst($risk); ?></span></td>
+        <td><button class="btn-sm approve">Escalate to Mediator</button></td>
       </tr>
+      <?php } } else { ?>
+      <tr><td colspan="4">No open disputes right now</td></tr>
       <?php } ?>
     </tbody>
   </table>

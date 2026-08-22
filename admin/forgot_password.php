@@ -5,19 +5,32 @@ include 'db_connect.php';
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $method = $_POST['method'];   // "email" ya "phone"
-    $identifier = $_POST['identifier'];
+    $email = $_POST['email'];
 
-    // NOTE: Yahan real app mein hoga:
-    // - Agar method == "email" -> PHPMailer se email bhejna
-    // - Agar method == "phone" -> Twilio jaisi SMS API se code bhejna
-    // Abhi demo ke liye ek random code generate kar ke session mein rakh rahe hain
-    $otp = rand(100000, 999999);
-    $_SESSION['reset_otp'] = $otp;
-    $_SESSION['reset_identifier'] = $identifier;
+    // Check the email belongs to an admin
+    $stmt = $conn->prepare("SELECT * FROM Admins WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    header("Location: reset_password.php?demo_otp=" . $otp);
-    exit();
+    if ($result->num_rows == 1) {
+        // NEW/UPDATED: store the OTP in the shared PasswordResets table
+        // instead of only in the session, so it works the same way
+        // for Users (tenant/landlord) and Admins.
+        $otp = rand(100000, 999999);
+        $expiry = date("Y-m-d H:i:s", strtotime("+15 minutes"));
+
+        $insert = $conn->prepare("INSERT INTO PasswordResets (identifier, otp, expiry, used) VALUES (?, ?, ?, 0)");
+        $insert->bind_param("sss", $email, $otp, $expiry);
+        $insert->execute();
+
+        // NOTE: In production, send $otp via email using PHPMailer/SMTP
+        // instead of showing it on screen. See Team Documentation Section 2.2.
+        header("Location: reset_password.php?email=" . urlencode($email) . "&demo_otp=" . $otp);
+        exit();
+    } else {
+        $error = "No admin account matches this email";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -39,16 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   .logo{ width:56px; height:56px; border-radius:14px; background:var(--primary); margin:0 auto 16px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:22px; font-weight:700; }
   .auth-card h2{ font-size:19px; color:var(--primary-dark); margin-bottom:4px; }
   .auth-card p.sub{ font-size:12px; color:var(--grey); margin-bottom:22px; }
-
-  .method-toggle{ display:flex; background:#F5EFE6; border-radius:12px; padding:4px; margin-bottom:16px; }
-  .method-toggle label{ flex:1; text-align:center; padding:9px; font-size:12.5px; font-weight:600; color:var(--grey); border-radius:9px; cursor:pointer; }
-  .method-toggle input{ display:none; }
-  .method-toggle input:checked + label{ background:var(--primary); color:#fff; }
-
-  .auth-card input[type=text]{ width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:10px; margin-bottom:12px; font-size:13px; font-family:'Poppins'; color:#222; }
+  .auth-card input{ width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:10px; margin-bottom:12px; font-size:13px; font-family:'Poppins'; color:#222; }
   .auth-card input:focus{ outline:none; border-color:var(--primary); }
   .auth-card button{ width:100%; padding:13px; border:none; border-radius:10px; background:var(--primary); color:#fff; font-weight:700; font-size:14px; margin-top:6px; cursor:pointer; }
   .auth-card button:hover{ background:var(--primary-dark); }
+  .error-msg{ color:#C96A56; font-size:11.5px; margin-top:10px; }
   .links{ margin-top:18px; font-size:12px; color:var(--grey); }
   .links a{ color:var(--primary); font-weight:600; text-decoration:none; }
 </style>
@@ -57,21 +65,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="auth-card">
     <div class="logo">SRM</div>
     <h2>Forgot Password</h2>
-    <p class="sub">Password reset karne ka tareeqa chunein</p>
+    <p class="sub">Enter your registered email, we'll send a reset code</p>
 
     <form action="forgot_password.php" method="POST">
-      <div class="method-toggle">
-        <input type="radio" name="method" id="m_email" value="email" checked>
-        <label for="m_email">Via Email</label>
-        <input type="radio" name="method" id="m_phone" value="phone">
-        <label for="m_phone">Via Mobile</label>
-      </div>
-
-      <input type="text" name="identifier" placeholder="Enter Email or Phone Number" required>
+      <input type="email" name="email" placeholder="Registered Email Address" required>
       <button type="submit">Send Reset Code</button>
+      <?php if ($error != "") { ?><p class="error-msg"><?php echo $error; ?></p><?php } ?>
     </form>
 
-    <div class="links"><a href="signin.php">&larr; Back to Sign In</a></div>
+    <div class="links"><a href="login.php">&larr; Back to Sign In</a></div>
   </div>
 </body>
 </html>

@@ -1,18 +1,24 @@
 <?php
-// ============================================
-// DATABASE CONNECTION FILE
-// Har page ke start mein isay "include" karna hai:
-// <?php include 'db_connect.php'; ?>
-// ============================================
+/*
+============================================
+DATABASE CONNECTION FILE
+Include this at the top of every page using:
+include 'db_connect.php';
+
+NOTE: Matches Fatima's updated schema (V2):
+- Admins table: admin_id, name, email, phone, password, status
+- PasswordResets table: reset_id, identifier, otp, expiry, used
+- Users table (tenant/landlord): user_id, name, phone, email, role, password, status
+============================================
+*/
 
 $host = "localhost";
-$db_user = "root";       // XAMPP ka default username
-$db_pass = "";           // XAMPP ka default password (khali)
-$db_name = "rental_app"; // phpMyAdmin mein yehi naam se database banao
+$db_user = "root";
+$db_pass = "";
+$db_name = "rental_app";
 
 $conn = new mysqli($host, $db_user, $db_pass, $db_name);
 
-// Agar connection fail ho jaye to error dikhao
 if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }

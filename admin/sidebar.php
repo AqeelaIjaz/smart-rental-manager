@@ -1,8 +1,10 @@
 <?php
-// ============================================
-// SIDEBAR - Har admin page mein include hoga
-// Usage: <?php $active = "dashboard"; include 'sidebar.php'; ?>
-// ============================================
+/*
+============================================
+SIDEBAR - Included in every admin page
+Usage: set $active = "dashboard"; then include 'sidebar.php';
+============================================
+*/
 ?>
 <style>
   :root{ --primary:#1F5A52; --primary-dark:#17423C; --gold:#C99A3A; --warn:#C96A56; --success:#5AA89A; --bg:#F5EFE6; --line:#E7E0D3; --grey:#8A8A8A; }
@@ -26,6 +28,8 @@
   .badge.pending{ background:#FBF0DA; color:#8a6a1f;}
   .badge.verified{ background:#E5F1EE; color:#2f6b62;}
   .badge.high{ background:#FBE4E0; color:var(--warn);}
+  .badge.medium{ background:#FBF0DA; color:#8a6a1f;}
+  .badge.low{ background:#E5F1EE; color:#2f6b62;}
   .btn-sm{ font-size:11px; font-weight:700; padding:6px 14px; border-radius:8px; border:none; margin-right:6px; cursor:pointer; }
   .btn-sm.approve{ background:var(--primary); color:#fff; }
   .btn-sm.reject{ background:#fff; border:1.5px solid var(--warn); color:var(--warn); }
@@ -40,6 +44,6 @@
   <a href="dashboard.php" class="nav-item <?php echo ($active=='dashboard')?'active':''; ?>">Dashboard</a>
   <a href="verify_users.php" class="nav-item <?php echo ($active=='verify')?'active':''; ?>">Verify Users</a>
   <a href="disputes.php" class="nav-item <?php echo ($active=='disputes')?'active':''; ?>">Disputes</a>
-  <a href="#" class="nav-item">Reports</a>
-  <a href="logout.php" class="nav-item">Logout</a>
+  <a href="reports.php" class="nav-item <?php echo ($active=='reports')?'active':''; ?>">Reports</a>
+  <a href="logout_confirm.php" class="nav-item">Logout</a>
 </div>

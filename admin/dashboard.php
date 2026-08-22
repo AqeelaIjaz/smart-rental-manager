@@ -1,19 +1,22 @@
 <?php
 session_start();
-// Agar login nahi hai to seedha login page pe bhej do
 if (!isset($_SESSION['admin_logged_in'])) {
-    header("Location: signin.php");
+    header("Location: login.php");
     exit();
 }
 include 'db_connect.php';
 $active = "dashboard";
 
-// NOTE: Abhi dummy numbers hain. Baad mein yahan real queries aayengi, jaise:
-// $result = $conn->query("SELECT COUNT(*) FROM users");
-$total_users = 128;
-$pending_verifications = 6;
-$open_disputes = 3;
-$high_risk = 2;
+// FR-7.3: platform-wide activity reports
+// Ye counts Users, Complaints, RiskScores tables se aa rahe hain
+// (Fatima ke banaye gaye schema ke mutabiq)
+
+$total_users = $conn->query("SELECT COUNT(*) as c FROM Users")->fetch_assoc()['c'] ?? 0;
+$pending_verifications = $conn->query("SELECT COUNT(*) as c FROM Users WHERE status='pending'")->fetch_assoc()['c'] ?? 0;
+$open_disputes = $conn->query("SELECT COUNT(*) as c FROM Complaints WHERE status='open'")->fetch_assoc()['c'] ?? 0;
+$high_risk = $conn->query("SELECT COUNT(*) as c FROM RiskScores WHERE risk_level='High'")->fetch_assoc()['c'] ?? 0;
+
+$recent = $conn->query("SELECT * FROM Complaints ORDER BY complaint_id DESC LIMIT 4");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,12 +43,16 @@ $high_risk = 2;
   </div>
 
   <table>
-    <thead><tr><th>Recent Activity</th><th>Type</th><th>Status</th><th>Date</th></tr></thead>
+    <thead><tr><th>Recent Complaints</th><th>Status</th></tr></thead>
     <tbody>
-      <tr><td>Faraz Ahmed - fixture repair request</td><td>Repair</td><td><span class="badge pending">Pending</span></td><td>13 Aug</td></tr>
-      <tr><td>Sara Khan - landlord signup</td><td>Verification</td><td><span class="badge pending">Pending</span></td><td>13 Aug</td></tr>
-      <tr><td>Bilal Rentals - complaint escalation</td><td>Dispute</td><td><span class="badge high">High</span></td><td>12 Aug</td></tr>
-      <tr><td>Ayesha Malik - tenant verified</td><td>Verification</td><td><span class="badge verified">Verified</span></td><td>11 Aug</td></tr>
+      <?php if ($recent && $recent->num_rows > 0) { while ($row = $recent->fetch_assoc()) { ?>
+      <tr>
+        <td><?php echo $row['transcribed_text'] ?? 'Complaint #' . $row['complaint_id']; ?></td>
+        <td><span class="badge pending"><?php echo $row['status']; ?></span></td>
+      </tr>
+      <?php } } else { ?>
+      <tr><td colspan="2">No complaints yet</td></tr>
+      <?php } ?>
     </tbody>
   </table>
 </div>
