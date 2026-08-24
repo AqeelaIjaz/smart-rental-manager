@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Notifications | Smart Rental Manager</title>
+
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+
+<link rel="stylesheet" href="../css/style.css">
+
+<link rel="stylesheet" href="../css/notifications.css">
+
+
+</head>
+
+
+<body>
+
+
+
+<div class="notification-container">
+
+
+
+
+
+<!-- Header -->
+
+
+<header class="page-header">
+
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+
+<h2 data-key="notifications">
+
+Notifications
+
+</h2>
+
+
+</header>
+
+
+
+
+
+
+
+<!-- Reminder Card -->
+
+
+<div class="notification-card reminder">
+
+
+<div class="icon-box">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+</div>
+
+
+
+<div>
+
+
+<h3 data-key="rentReminder">
+
+Rent Reminder
+
+</h3>
+
+
+<p data-key="rentNotification">
+
+Your rent payment is due in 5 days.
+
+</p>
+
+
+<span data-key="today">
+
+Today
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Payment Notification -->
+
+
+<div class="notification-card success">
+
+
+<div class="icon-box">
+
+<i class="fa-solid fa-money-check-dollar"></i>
+
+</div>
+
+
+
+<div>
+
+
+<h3 data-key="paymentConfirmed">
+
+Payment Confirmed
+
+</h3>
+
+
+<p data-key="receiptGenerated">
+
+Your rent payment receipt has been generated.
+
+</p>
+
+
+<span data-key="yesterday">
+
+Yesterday
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Complaint Notification -->
+
+
+<div class="notification-card warning">
+
+
+<div class="icon-box">
+
+<i class="fa-solid fa-comment-dots"></i>
+
+</div>
+
+
+
+<div>
+
+
+<h3 data-key="complaintUpdate">
+
+Complaint Update
+
+</h3>
+
+
+<p data-key="repairReview">
+
+Your repair request is being reviewed.
+
+</p>
+
+
+<span data-key="twoDays">
+
+2 days ago
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Empty Message -->
+
+
+<div id="emptyNotification" class="empty-box">
+
+
+<i class="fa-solid fa-bell-slash"></i>
+
+
+<p data-key="noNotifications">
+
+No new notifications
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<button id="clearNotifications" 
+class="clear-btn"
+data-key="clearNotifications">
+
+Clear All Notifications
+
+</button>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<script src="../js/translations.js"></script>
+<script src="../js/language.js"></script>
+
+<script src="../js/notifications.js"></script>
+
+
+
+</body>
+
+
+</html>

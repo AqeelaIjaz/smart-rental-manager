@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | Smart Rental Manager</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/forms.css">
+
+</head>
+
+<body>
+
+<div class="form-container">
+
+
+    <!-- Logo -->
+
+    <div class="logo">
+
+        <i class="fa-solid fa-user-shield"></i>
+
+    </div>
+
+
+    <!-- Heading -->
+
+    <h2 data-key="adminLogin">
+        Admin Login
+    </h2>
+
+
+    <p class="subtitle" data-key="adminSubtitle">
+
+        Login to manage the Smart Rental Manager system.
+
+    </p>
+
+
+
+    <!-- Admin Login Form -->
+
+    <form id="adminLoginForm">
+
+
+        <!-- Email -->
+
+        <div class="input-group">
+
+
+            <label data-key="adminEmail">
+
+                Admin Email
+
+            </label>
+
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-envelope"></i>
+
+
+                <input
+                    type="email"
+                    id="adminEmail"
+                    placeholder="Enter admin email"
+                    required>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Password -->
+
+        <div class="input-group">
+
+
+            <label data-key="password">
+
+                Password
+
+            </label>
+
+
+            <div class="input-box">
+
+
+                <i class="fa-solid fa-lock"></i>
+
+
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Enter password"
+                    required>
+
+
+                <i
+                    class="fa-solid fa-eye toggle-password"
+                    id="toggleAdminPassword">
+
+                </i>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <!-- Forgot Password -->
+
+        <div class="forgot-link">
+
+
+            <a href="forgot-password.html" data-key="forgotPassword">
+
+                Forgot Password?
+
+            </a>
+
+
+        </div>
+
+
+
+
+        <!-- Login Button -->
+
+
+        <button type="submit" 
+                class="submit-btn"
+                data-key="adminLoginBtn">
+
+            Login as Admin
+
+        </button>
+
+
+
+    </form>
+
+
+
+
+    <!-- Bottom Links -->
+
+    <div class="bottom-links">
+
+
+        <p>
+
+
+            <span data-key="adminUserQuestion">
+
+                Are you a User?
+
+            </span>
+
+
+            <a href="login.html" data-key="userLogin">
+
+                User Login
+
+            </a>
+
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- Language Scripts -->
+
+<script src="../js/translations.js"></script>
+<script src="../js/language.js"></script>
+
+<script src="../js/admin-login.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,347 @@
+/* =====================================
+   SMART RENTAL MANAGER
+   Settings CSS
+===================================== */
+
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+
+body{
+
+    background:#F5EFE6;
+
+}
+
+
+
+
+
+
+/* Main Container */
+
+
+.settings-container{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:25px;
+
+    padding-bottom:40px;
+
+}
+
+
+
+
+
+
+/* Header */
+
+
+.page-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.page-header a{
+
+    color:#1F5A52;
+
+    font-size:22px;
+
+}
+
+
+
+.page-header h2{
+
+    font-size:24px;
+
+    color:#222;
+
+}
+
+
+
+
+
+
+
+
+/* Setting Card */
+
+
+.setting-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+.setting-card h3{
+
+    color:#1F5A52;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.setting-card h3 i{
+
+    margin-right:10px;
+
+}
+
+
+
+
+
+
+
+
+/* Options */
+
+
+.option-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+
+
+.option-row:last-child{
+
+    border:none;
+
+}
+
+
+
+
+.option-row span{
+
+    color:#333;
+
+}
+
+
+
+
+
+
+
+/* Toggle Row */
+
+
+.toggle-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 0;
+
+}
+
+
+
+.toggle-row span{
+
+    color:#333;
+
+}
+
+
+
+
+
+
+
+
+/* Switch Button */
+
+
+.switch{
+
+    position:relative;
+
+    width:50px;
+
+    height:25px;
+
+}
+
+
+
+.switch input{
+
+    display:none;
+
+}
+
+
+
+.slider{
+
+    position:absolute;
+
+    cursor:pointer;
+
+    background:#ccc;
+
+    border-radius:20px;
+
+    top:0;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    transition:.3s;
+
+}
+
+
+
+.slider:before{
+
+    content:"";
+
+    position:absolute;
+
+    height:19px;
+
+    width:19px;
+
+    background:white;
+
+    border-radius:50%;
+
+    left:3px;
+
+    bottom:3px;
+
+    transition:.3s;
+
+}
+
+
+
+.switch input:checked + .slider{
+
+    background:#1F5A52;
+
+}
+
+
+
+.switch input:checked + .slider:before{
+
+    transform:translateX(25px);
+
+}
+
+
+
+
+
+
+
+
+/* Save Button */
+
+
+.save-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    background:#1F5A52;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+
+
+.save-btn:hover{
+
+    background:#184842;
+
+}
+
+
+
+
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:600px){
+
+
+    .settings-container{
+
+        padding:15px;
+
+    }
+
+
+}
