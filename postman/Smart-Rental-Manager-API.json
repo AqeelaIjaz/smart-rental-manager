@@ -1,0 +1,432 @@
+{
+  "info": {
+    "name": "Smart Rental Manager API",
+    "description": "Complete API collection for the Smart Rental Manager backend (Member 2 - Meeral). Base URL variable: {{base_url}} defaults to http://localhost/smart-rental-manager. Auth uses PHP sessions (cookie jar) - Postman will automatically store the PHPSESSID cookie after Login and reuse it for subsequent requests in this collection as long as cookie jar is enabled for the domain.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost/smart-rental-manager" },
+    { "key": "agreement_id", "value": "1" },
+    { "key": "complaint_id", "value": "1" },
+    { "key": "repair_id", "value": "1" },
+    { "key": "payment_id", "value": "1" },
+    { "key": "notification_id", "value": "1" },
+    { "key": "risk_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "01 - Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/auth/signup.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"phone\": \"03000000000\",\n  \"email\": \"test@example.com\",\n  \"password\": \"Test12345\",\n  \"role\": \"tenant\",\n  \"language\": \"ur\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/auth/login.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bilal.tenant@example.com\",\n  \"password\": \"Test12345\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/backend/auth/logout.php"
+          }
+        },
+        {
+          "name": "[NEW v2] Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/auth/admin-login.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Test12345\"\n}"
+            }
+          }
+        },
+        {
+          "name": "[NEW v2] Forgot Password (Tenant/Landlord)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/auth/forgot-password.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bilal.tenant@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "[NEW v2] Forgot Password (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/auth/forgot-password.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"account_type\": \"admin\"\n}"
+            }
+          }
+        },
+        {
+          "name": "[NEW v2] Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/auth/reset-password.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bilal.tenant@example.com\",\n  \"otp\": \"REPLACE_WITH_OTP_FROM_FORGOT_PASSWORD_RESPONSE\",\n  \"new_password\": \"NewPass123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02b - Admin Management [NEW v2]",
+      "item": [
+        {
+          "name": "Create Admin (admin only)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/admin/create-admin.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Admin\",\n  \"email\": \"new.admin@example.com\",\n  \"phone\": \"03005556666\",\n  \"password\": \"Test12345\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Admins (admin only)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/admin/list-admins.php"
+          }
+        },
+        {
+          "name": "Update Admin Status - activate/deactivate (admin only)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/admin/update-status.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 3,\n  \"status\": \"inactive\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Agreements",
+      "item": [
+        {
+          "name": "Create Agreement",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/agreements/create.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenant_id\": 4,\n  \"landlord_id\": 2,\n  \"rent_amount\": 25000,\n  \"due_date\": \"2026-09-01\",\n  \"penalty\": 500\n}"
+            }
+          }
+        },
+        {
+          "name": "Upload Agreement Document",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/backend/agreements/upload.php",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "agreement_id", "value": "{{agreement_id}}", "type": "text" },
+                { "key": "file", "type": "file" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Agreements",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/agreements/list.php"
+          }
+        },
+        {
+          "name": "Get Agreement",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/agreements/get.php?id={{agreement_id}}"
+          }
+        },
+        {
+          "name": "Update Agreement",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/agreements/update.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{agreement_id}},\n  \"status\": \"active\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Complaints",
+      "item": [
+        {
+          "name": "Create Complaint (text only)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/complaints/create.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agreement_id\": {{agreement_id}},\n  \"complaint_text\": \"Water leakage in the bathroom ceiling.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Complaint (with voice file)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/backend/complaints/create.php",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "agreement_id", "value": "{{agreement_id}}", "type": "text" },
+                { "key": "complaint_text", "value": "Voice complaint attached", "type": "text" },
+                { "key": "voice_file", "type": "file" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Complaints",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/complaints/list.php?agreement_id={{agreement_id}}"
+          }
+        },
+        {
+          "name": "Get Complaint",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/complaints/get.php?id={{complaint_id}}"
+          }
+        },
+        {
+          "name": "Update AI Suggestion (Member 3 write-back)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/complaints/update.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"complaint_id\": {{complaint_id}},\n  \"ai_suggestion\": \"Schedule a technician visit within 48 hours.\",\n  \"status\": \"in_review\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Repairs",
+      "item": [
+        {
+          "name": "Create Repair",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/repairs/create.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agreement_id\": {{agreement_id}},\n  \"issue_description\": \"Kitchen tap is broken and leaking.\",\n  \"priority\": \"high\",\n  \"estimated_cost\": 3500\n}"
+            }
+          }
+        },
+        {
+          "name": "Upload Repair Photo",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/backend/repairs/upload.php",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "repair_id", "value": "{{repair_id}}", "type": "text" },
+                { "key": "photo", "type": "file" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Repairs",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/repairs/list.php?agreement_id={{agreement_id}}"
+          }
+        },
+        {
+          "name": "Get Repair",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/repairs/get.php?id={{repair_id}}"
+          }
+        },
+        {
+          "name": "Update Repair",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/repairs/update.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{repair_id}},\n  \"status\": \"in_progress\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Payments",
+      "item": [
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/payments/create.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agreement_id\": {{agreement_id}},\n  \"amount\": 25000,\n  \"payment_method\": \"QR\",\n  \"transaction_reference\": \"TXN001\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Payments",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/payments/list.php?agreement_id={{agreement_id}}"
+          }
+        },
+        {
+          "name": "Get Payment",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/payments/get.php?id={{payment_id}}"
+          }
+        },
+        {
+          "name": "Get Receipt",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/payments/receipt.php?id={{payment_id}}"
+          }
+        },
+        {
+          "name": "Update Payment Status (Member 5 QR confirm)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/payments/payment-status.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{payment_id}},\n  \"status\": \"paid\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Notifications",
+      "item": [
+        {
+          "name": "Create Notification",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/notifications/create.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 4,\n  \"title\": \"Rent Reminder\",\n  \"message\": \"Your rent is due in 5 days.\",\n  \"type\": \"rent_reminder\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Notifications",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/notifications/list.php"
+          }
+        },
+        {
+          "name": "Mark Notification Read",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/notifications/mark-read.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{notification_id}}\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Risk Scores",
+      "item": [
+        {
+          "name": "Update Risk Score (Member 3 write-back)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/backend/risk/update.php",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 4,\n  \"agreement_id\": {{agreement_id}},\n  \"risk_level\": \"low\",\n  \"score\": 12.5,\n  \"reason\": \"Consistent on-time payment history.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Risk Score",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/risk/get.php?agreement_id={{agreement_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - Cron / Reminders",
+      "item": [
+        {
+          "name": "Run Rent Reminder Check",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/backend/cron/rent-reminder.php"
+          }
+        }
+      ]
+    }
+  ]
+}
