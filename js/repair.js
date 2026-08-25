@@ -1,0 +1,277 @@
+// ===========================================
+// Smart Rental Manager
+// Repair Report JavaScript
+// ===========================================
+
+
+
+const repairImage = document.getElementById("repairImage");
+
+const photoBox = document.getElementById("photoBox");
+
+const imagePreview = document.getElementById("imagePreview");
+
+const submitRepair = document.getElementById("submitRepair");
+
+const issueDescription = document.getElementById("issueDescription");
+
+const priority = document.getElementById("priority");
+
+
+
+
+
+// ===============================
+// Open Image Selector
+// ===============================
+
+
+photoBox.addEventListener("click",()=>{
+
+
+    repairImage.click();
+
+
+});
+
+
+
+
+
+// ===============================
+// Image Preview
+// ===============================
+
+
+repairImage.addEventListener("change",()=>{
+
+
+    const image = repairImage.files[0];
+
+
+
+    if(image){
+
+
+        imagePreview.innerHTML = `
+
+        <i class="fa-solid fa-image"></i>
+
+        <p>
+            ${image.name}
+        </p>
+
+        `;
+
+
+    }
+
+
+});
+
+
+
+
+
+
+
+// ===============================
+// AI Repair Analysis Simulation
+// ===============================
+
+
+function analyzeRepair(){
+
+
+
+    const aiIssue = document.getElementById("aiIssue");
+
+    const aiPriority = document.getElementById("aiPriority");
+
+    const aiCost = document.getElementById("aiCost");
+
+
+
+
+    aiIssue.innerHTML =
+    "Water leakage / damaged fixture";
+
+
+
+    aiPriority.innerHTML =
+    priority.value === "Select Priority"
+    ? "Medium"
+    : priority.value;
+
+
+
+    aiCost.innerHTML =
+    "Estimated Rs. 3,000 - 5,000";
+
+
+
+}
+
+
+
+
+
+// Run AI analysis when details change
+
+
+priority.addEventListener("change",()=>{
+
+
+    analyzeRepair();
+
+
+});
+
+
+
+issueDescription.addEventListener("keyup",()=>{
+
+
+    if(issueDescription.value.length > 5){
+
+        analyzeRepair();
+
+    }
+
+
+});
+
+
+
+
+
+
+
+// ===============================
+// Submit Repair Request
+// ===============================
+
+
+submitRepair.addEventListener("click",()=>{
+
+
+
+    if(!repairImage.files[0]){
+
+
+        alert(
+            "Please upload an image first."
+        );
+
+
+        return;
+
+    }
+
+
+
+
+    if(issueDescription.value.trim()===""){
+
+
+        alert(
+            "Please describe the issue."
+        );
+
+
+        return;
+
+    }
+
+
+
+
+    alert(
+        "Repair request submitted successfully!"
+    );
+
+
+
+    setTimeout(()=>{
+
+
+        window.location.href="dashboard.html";
+
+
+    },1000);
+
+
+
+});
+
+
+
+
+
+
+// ===============================
+// Drag and Drop Image
+// ===============================
+
+
+photoBox.addEventListener("dragover",(e)=>{
+
+
+    e.preventDefault();
+
+
+    photoBox.style.background="#F5EFE6";
+
+
+});
+
+
+
+
+
+photoBox.addEventListener("dragleave",()=>{
+
+
+    photoBox.style.background="white";
+
+
+});
+
+
+
+
+
+photoBox.addEventListener("drop",(e)=>{
+
+
+    e.preventDefault();
+
+
+    repairImage.files=e.dataTransfer.files;
+
+
+    const image = repairImage.files[0];
+
+
+
+    if(image){
+
+
+        imagePreview.innerHTML=`
+
+
+        <i class="fa-solid fa-image"></i>
+
+
+        <p>
+            ${image.name}
+        </p>
+
+
+        `;
+
+
+    }
+
+
+});

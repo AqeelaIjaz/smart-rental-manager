@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Voice Complaint | Smart Rental Manager</title>
+
+
+<!-- Google Font -->
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+
+
+<!-- Font Awesome -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+
+<!-- CSS -->
+
+<link rel="stylesheet" href="../css/style.css">
+
+<link rel="stylesheet" href="../css/complaint.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="complaint-container">
+
+
+
+<!-- Header -->
+
+
+<header class="page-header">
+
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+
+<h2 data-key="voiceComplaint">
+
+Voice Complaint
+
+</h2>
+
+
+</header>
+
+
+
+
+
+
+
+<!-- Information Card -->
+
+
+<div class="complaint-info">
+
+
+<i class="fa-solid fa-microphone"></i>
+
+
+
+<div>
+
+
+<h3 data-key="recordComplaint">
+
+Record Your Complaint
+
+</h3>
+
+
+
+<p data-key="complaintDescription">
+
+Explain your issue in Urdu or English using voice.
+AI will convert it into text and suggest a fair solution.
+
+</p>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Voice Recorder -->
+
+
+<div class="record-card">
+
+
+<h3 data-key="voiceRecording">
+
+Voice Recording
+
+</h3>
+
+
+
+
+<button id="recordBtn" class="record-btn">
+
+
+<i class="fa-solid fa-microphone"></i>
+
+
+</button>
+
+
+
+
+<p id="recordStatus" data-key="recordStart">
+
+Press microphone to start recording
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Converted Text -->
+
+
+<div class="text-card">
+
+
+<h3>
+
+
+<i class="fa-solid fa-file-lines"></i>
+
+<span data-key="complaintText">
+
+Complaint Text
+
+</span>
+
+
+</h3>
+
+
+
+
+<textarea 
+id="complaintText"
+data-key-placeholder="voiceTextPlaceholder"
+placeholder="Your voice will appear here..."></textarea>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- AI Suggestion -->
+
+
+<div class="ai-suggestion">
+
+
+<h3>
+
+
+<i class="fa-solid fa-robot"></i>
+
+
+<span data-key="aiSuggestion">
+
+AI Suggestion
+
+</span>
+
+
+</h3>
+
+
+
+
+<p id="aiResponse" data-key="aiRecommendation">
+
+AI recommendation will appear here.
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<button id="submitComplaint" class="submit-btn" data-key="submitComplaint">
+
+
+Submit Complaint
+
+
+</button>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+<!-- Translation Files -->
+
+<script src="../js/translations.js"></script>
+
+<script src="../js/language.js"></script>
+
+
+<!-- Complaint JS -->
+
+<script src="../js/complaint.js"></script>
+
+
+
+</body>
+
+
+</html>
