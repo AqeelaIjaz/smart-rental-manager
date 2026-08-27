@@ -1,0 +1,29 @@
+complaint_text,category
+The landlord is asking for more rent than agreed in the contract,Rent Issue
+I paid my rent but the landlord says he never received it,Rent Issue
+Landlord increased my rent without notice,Rent Issue
+I was charged a late fee even though I paid on time,Rent Issue
+The rent amount charged does not match my agreement,Rent Issue
+Landlord is demanding rent for a month I already paid,Rent Issue
+I am being asked to pay extra maintenance charges not in my contract,Rent Issue
+The security deposit was not returned after I moved out,Rent Issue
+The bathroom tap has been leaking for two weeks and no one fixed it,Repair Issue
+There is no electricity in my kitchen since yesterday,Repair Issue
+The ceiling is leaking water during rain,Repair Issue
+My door lock is broken and I cannot secure my apartment,Repair Issue
+The water heater stopped working and landlord is not responding,Repair Issue
+There is a gas leak smell in the kitchen,Repair Issue
+The window glass is broken and rain is coming inside,Repair Issue
+The air conditioner has not worked for a month despite complaints,Repair Issue
+My neighbor plays loud music every night until 3am,Noise Complaint
+There is constant noise from construction next door during night hours,Noise Complaint
+The upstairs tenant is making loud banging noises daily,Noise Complaint
+Other tenants are having loud parties every weekend disturbing sleep,Noise Complaint
+Landlord is threatening to evict me without proper notice,Eviction Threat
+I was told to vacate the house within two days with no reason given,Eviction Threat
+Landlord changed the locks while I was away and I could not enter,Eviction Threat
+I am being forced out even though my lease has six months remaining,Eviction Threat
+I want to know the process for renewing my lease agreement,Other
+Can I get a copy of my signed rental agreement,Other
+I want to add a family member to my rental agreement,Other
+How do I update my contact information on file,Other

@@ -1,0 +1,6 @@
+{
+  "Electrical": "High",
+  "Structural": "High",
+  "Plumbing": "Medium",
+  "Other": "Low"
+}
