@@ -15,7 +15,7 @@
  *   1. Loop through active agreements.
  *   2. Calculate days remaining until due_date.
  *   3. If exactly 5 days remain, create a "rent_reminder" notification
- *      for the tenant.
+ *      for the tenant AND send them a WhatsApp reminder (Member 5).
  *   4. Duplicate notifications are prevented by checking whether a
  *      rent_reminder notification for this agreement's due date was
  *      already created today.
@@ -26,6 +26,7 @@
  */
 
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../helpers/notifier.php';
 
 // Allow both CLI and HTTP execution. Only load the JSON response
 // helper (which calls http_response_code) when running over HTTP.
@@ -36,6 +37,8 @@ if (!$isCli) {
 
 /**
  * Runs the rent reminder check and creates notifications where needed.
+ * Also sends a WhatsApp reminder to the tenant (dev-mode logs it if no
+ * WhatsApp API credentials are configured).
  * Returns a summary array of what was created.
  *
  * @param PDO $pdo
@@ -47,9 +50,11 @@ function runRentReminderCheck(PDO $pdo): array
     $today = new DateTime('today');
 
     $stmt = $pdo->query(
-        "SELECT id, tenant_id, due_date, rent_amount
-         FROM agreements
-         WHERE status = 'active'"
+        "SELECT a.id, a.tenant_id, a.due_date, a.rent_amount,
+                u.name AS tenant_name, u.phone AS tenant_phone
+         FROM agreements a
+         JOIN users u ON u.id = a.tenant_id
+         WHERE a.status = 'active'"
     );
     $agreements = $stmt->fetchAll();
 
@@ -98,10 +103,21 @@ function runRentReminderCheck(PDO $pdo): array
                 'message' => $message,
             ]);
 
+            // Member 5: actual WhatsApp/SMS send, not just the in-app row.
+            $waStatus = 'skipped (no phone on file)';
+            if (!empty($agreement['tenant_phone'])) {
+                $waMessage = "Hi {$agreement['tenant_name']}, this is a reminder that your rent of "
+                    . "Rs. {$agreement['rent_amount']} is due on {$projectedDue->format('d M Y')} "
+                    . "(in 5 days). Please pay on time to avoid penalty.";
+                $waResult = sendWhatsAppMessage($agreement['tenant_phone'], $waMessage);
+                $waStatus = $waResult['mode'] ?? 'unknown';
+            }
+
             $created[] = [
-                'agreement_id' => (int) $agreement['id'],
-                'tenant_id'    => (int) $agreement['tenant_id'],
-                'due_date'     => $projectedDue->format('Y-m-d'),
+                'agreement_id'   => (int) $agreement['id'],
+                'tenant_id'      => (int) $agreement['tenant_id'],
+                'due_date'       => $projectedDue->format('Y-m-d'),
+                'whatsapp_status'=> $waStatus,
             ];
         }
     }
