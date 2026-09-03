@@ -1,0 +1,94 @@
+/* ==========================
+   Welcome Page
+========================== */
+
+.welcome-container {
+    background: #ffffff;
+    width: 90%;
+    max-width: 450px;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.subtitle {
+    color: #777777;
+    font-size: 15px;
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+/* Language Buttons */
+
+.language-box {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 35px 0;
+}
+
+.lang-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #e5e5e5;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.lang-btn:hover {
+    transform: translateY(-2px);
+}
+
+.lang-btn.active {
+    background: #1F5A52;
+    color: white;
+}
+
+/* Buttons */
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.primary-btn {
+    background: #1F5A52;
+    color: white;
+}
+
+.primary-btn:hover {
+    background: #184842;
+}
+
+.secondary-btn {
+    background: #C99A3A;
+    color: white;
+}
+
+.secondary-btn:hover {
+    background: #b5882d;
+}
+
+@media (max-width: 500px) {
+    .welcome-container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}
