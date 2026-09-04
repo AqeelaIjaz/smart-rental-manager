@@ -1,0 +1,12 @@
+# Python dependencies for AI Engineering_rental_manager (experimental/research folder)
+# Install with: pip install -r requirements.txt
+
+flask
+numpy
+pandas
+scikit-learn
+tensorflow
+joblib
+Pillow
+requests
+openai-whisper

@@ -1,0 +1,38 @@
+# Environment / secrets
+.env
+.env.local
+
+# Dependencies
+node_modules/
+vendor/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+
+# Uploads (user-generated content, not source code)
+backend/uploads/
+backend/repairs/uploads/
+uploads/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Backups
+backups/*.sql
+backups/*.zip
+
+# Model files (large binaries - optional, remove if you want them tracked)
+AI Engineering_rental_manager/**/*.keras
+AI Engineering_rental_manager/**/*.pkl
