@@ -1,20 +1,4 @@
 <?php
-/**
- * POST /backend/auth/signup.php
- *
- * Registers a new user (tenant, landlord, or admin).
- *
- * Request JSON:
- * {
- *   "name": "Test User",
- *   "phone": "03000000000",
- *   "email": "test@example.com",
- *   "password": "Test12345",
- *   "role": "tenant",
- *   "language": "ur"
- * }
- */
-
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../helpers/validation.php';
@@ -27,11 +11,10 @@ requireFields($input, ['name', 'phone', 'email', 'password', 'role', 'language']
 $name     = sanitizeString($input['name']);
 $phone    = sanitizeString($input['phone']);
 $email    = strtolower(trim($input['email']));
-$password = $input['password']; // not sanitized as text - used only for hashing
+$password = $input['password'];
 $role     = sanitizeString($input['role']);
 $language = sanitizeString($input['language']);
 
-// ---- Validation ----
 if (strlen($name) < 2) {
     sendError('Name must be at least 2 characters long.', 422);
 }
@@ -45,7 +28,7 @@ if (!isValidPassword($password)) {
     sendError('Password must be at least 8 characters long.', 422);
 }
 if (!isValidRole($role)) {
-    sendError('Invalid role. Must be tenant or landlord. (Admin accounts are created separately by an existing admin.)', 422);
+    sendError('Invalid role. Must be tenant or landlord.', 422);
 }
 if (!isValidLanguage($language)) {
     sendError('Invalid language. Must be en, ur, or roman_ur.', 422);
@@ -54,14 +37,12 @@ if (!isValidLanguage($language)) {
 $pdo = getDbConnection();
 
 try {
-    // Check duplicate email
     $stmt = $pdo->prepare('SELECT id FROM users WHERE email = :email LIMIT 1');
     $stmt->execute(['email' => $email]);
     if ($stmt->fetch()) {
         sendError('An account with this email already exists.', 409);
     }
 
-    // Check duplicate phone
     $stmt = $pdo->prepare('SELECT id FROM users WHERE phone = :phone LIMIT 1');
     $stmt->execute(['phone' => $phone]);
     if ($stmt->fetch()) {

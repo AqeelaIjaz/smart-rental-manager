@@ -47,9 +47,7 @@ paymentDate.innerHTML =
 downloadReceipt.addEventListener("click",()=>{
 
 
-    alert(
-        "Receipt downloaded successfully!"
-    );
+    window.print();
 
 
 });

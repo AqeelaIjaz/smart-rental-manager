@@ -152,57 +152,49 @@ issueDescription.addEventListener("keyup",()=>{
 // ===============================
 
 
-submitRepair.addEventListener("click",()=>{
 
-
+    submitRepair.addEventListener("click", async () => {
 
     if(!repairImage.files[0]){
-
-
-        alert(
-            "Please upload an image first."
-        );
-
-
+        alert("Please upload an image first.");
         return;
-
     }
-
-
-
 
     if(issueDescription.value.trim()===""){
-
-
-        alert(
-            "Please describe the issue."
-        );
-
-
+        alert("Please describe the issue.");
         return;
-
     }
 
+    const formData = new FormData();
+    formData.append("photo", repairImage.files[0]);
+    formData.append("issue_description", issueDescription.value);
+    formData.append("priority", priority.value.toLowerCase());
+    formData.append("estimated_cost", "4000"); // ya jo bhi fixed price list se aaye
+    formData.append("agreement_id", 1); // actual logged-in tenant ka agreement_id yahan aana chahiye
 
+    try {
+        const response = await fetch("../../backend/repairs/create.php", {
+            method: "POST",
+            body: formData
+        });
 
+        const result = await response.json();
 
-    alert(
-        "Repair request submitted successfully!"
-    );
+        if(result.success){
+            alert("Repair request submitted successfully!");
+            setTimeout(()=>{ window.location.href="dashboard.html"; }, 1000);
+        } else {
+            alert("Submission failed: " + result.message);
+        }
 
-
-
-    setTimeout(()=>{
-
-
-        window.location.href="dashboard.html";
-
-
-    },1000);
-
-
-
+    } catch(err){
+        alert("Error connecting to server.");
+        console.error(err);
+    }
 });
+
+
+
 
 
 
