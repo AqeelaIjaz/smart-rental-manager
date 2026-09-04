@@ -49,6 +49,11 @@ loginForm.addEventListener("submit", async (e) => {
         const result = await response.json();
 
         if (result.success) {
+
+            // login.php now returns { success, message, data: { id, name, email, phone, role, language } }
+            // Save it directly - no need to fill in email ourselves anymore.
+            localStorage.setItem("user", JSON.stringify(result.data));
+
             alert("Login Successful!");
             setTimeout(() => {
                 window.location.href = "dashboard.html";

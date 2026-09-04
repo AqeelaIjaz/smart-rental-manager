@@ -107,10 +107,10 @@ Tenant
 
 
 
-<!-- Personal Information -->
+<!-- Personal Information (view mode) -->
 
 
-<div class="info-card">
+<div class="info-card" id="viewInfoCard">
 
 
 <h3>
@@ -140,7 +140,7 @@ Full Name
 </span>
 
 
-<b>
+<b id="fullName">
 
 Ali Ahmed
 
@@ -164,7 +164,7 @@ Email
 </span>
 
 
-<b>
+<b id="email">
 
 ali@gmail.com
 
@@ -188,7 +188,7 @@ Phone
 </span>
 
 
-<b>
+<b id="phone">
 
 0300-0000000
 
@@ -199,6 +199,42 @@ Phone
 
 
 
+
+</div>
+
+
+<!-- Personal Information (edit mode) - hidden by default -->
+
+<div class="info-card" id="editInfoCard" style="display:none;">
+
+<h3>
+<i class="fa-solid fa-user-pen"></i>
+<span>Edit Personal Information</span>
+</h3>
+
+<form id="editProfileForm">
+
+    <div class="info-row" style="flex-direction:column; align-items:stretch; gap:6px;">
+        <label for="editName">Full Name</label>
+        <input type="text" id="editName" required style="padding:8px; border-radius:8px; border:1px solid #ccc;">
+    </div>
+
+    <div class="info-row" style="flex-direction:column; align-items:stretch; gap:6px;">
+        <label for="editEmail">Email</label>
+        <input type="email" id="editEmail" required style="padding:8px; border-radius:8px; border:1px solid #ccc;">
+    </div>
+
+    <div class="info-row" style="flex-direction:column; align-items:stretch; gap:6px;">
+        <label for="editPhone">Phone</label>
+        <input type="text" id="editPhone" style="padding:8px; border-radius:8px; border:1px solid #ccc;">
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:14px;">
+        <button type="submit" id="saveProfileBtn" style="flex:1; padding:10px; border-radius:8px; border:none; background:#2d6a4f; color:#fff; cursor:pointer;">Save</button>
+        <button type="button" id="cancelEditBtn" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; background:#fff; cursor:pointer;">Cancel</button>
+    </div>
+
+</form>
 
 </div>
 

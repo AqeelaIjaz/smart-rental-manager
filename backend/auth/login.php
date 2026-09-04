@@ -50,13 +50,14 @@ try {
         sendSuccess('Login successful', [
             'id'       => (int) $admin['id'],
             'name'     => $admin['name'],
+            'email'    => $admin['email'],
             'role'     => 'admin',
             'language' => 'en',
         ]);
     }
 
     $stmt = $pdo->prepare(
-        'SELECT id, name, email, password, role, language
+        'SELECT id, name, email, phone, password, role, language
          FROM users
          WHERE email = :email
          LIMIT 1'
@@ -79,6 +80,8 @@ try {
     sendSuccess('Login successful', [
         'id'       => (int) $user['id'],
         'name'     => $user['name'],
+        'email'    => $user['email'],
+        'phone'    => $user['phone'],
         'role'     => $user['role'],
         'language' => $user['language'],
     ]);
