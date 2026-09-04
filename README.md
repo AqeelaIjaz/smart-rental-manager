@@ -9,7 +9,7 @@ and reminders, with Urdu/English voice support.
 | Member  | Role                                  |
 |---------|----------------------------------------|
 | Aana    | Frontend / UI Development              |
-| Meeral  | Backend Development                    |
+| Meral  | Backend Development                    |
 | Kashaf  | Complaint & Risk Logic (voice, dispute rules, risk scoring) |
 | Fatima  | Database Design                        |
 | Manahil | Payments, QR & Notifications           |
